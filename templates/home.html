@@ -1,0 +1,115 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content %}
+
+<div class="md:flex md:space-x-10 space-y-10 mb-24">
+
+  <div class=" mt-10  ">
+    <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
+      Station Filter :
+    </h3>
+    <ul
+      class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+    >
+    <li
+    class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600"
+  >
+    <div class="flex items-center ps-3">
+      <a href="{% url 'home' %}"
+        for="list-radio-license"
+        class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >All
+      </a>
+    </div>
+  </li>
+    {% for cat in category %}
+      <li
+        class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600"
+      >
+        <div class="flex items-center ps-3">
+          <a href="{% url 'category_wise_post' cat.slug %}"
+            for="list-radio-license"
+            class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >{{cat.name}}
+          </a>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+<div class="">
+  <h3 class="mb-4 font-semibold text-gray-900 dark:text-white mx-20">
+    Trains: 
+  </h3>
+
+   <div class="sm:grid sm:grid-cols-1 sm:gap-4 md:grid md:grid-cols-2 md:mx-20  space-y-3 lg:grid lg:grid-cols-3 lg:gap-4 lg:mx-20 ">
+    {% comment %}
+     part 2{% endcomment %}
+  {% comment %} <div class=" mx-20 gird grid-flow-row"> {% endcomment %}
+    {% for train in trains %}
+        <div
+          class="max-w-xs p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 "
+        >
+          <a href="{% url 'buy_ticket' id=train.id %}">
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+            {{train.name}}
+            </h5>
+          </a>
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <strong>From:</strong> {{train.start_station}}
+          </p>
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <strong>To:</strong> {{train.end_station}}
+          </p>
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <strong>Shedule:</strong>
+            {% for s in schedule %}
+              {% if s.train.id == train.id %}
+              {% if request.user.is_superuser %}
+                <a href="{% url 'edit_schedule' s.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ s.train_date }}</a>,
+                {% else %}
+                  {{ s.train_date }},
+              {% endif %}
+              {% endif %}
+            {% endfor %} 
+{% comment %} 
+            <div>
+            {% if shedule.objects.filter(train=train) %}
+              <h1> {{ train_date }} i am here </h1>
+            {% endif %}
+            </div>
+           {% endcomment %}
+          </p>
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <strong>Ticket Price:</strong> {{train.price}}
+          </p>
+          
+          <a
+            href="{% url 'buy_ticket' id=train.id %}" 
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Click For Ticket
+            <svg
+              class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </a>
+        </div>
+        {% endfor %}
+  </div>
+</div>
+</div>
+
+{% endblock %}

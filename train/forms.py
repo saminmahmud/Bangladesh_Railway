@@ -25,3 +25,17 @@ class Edit_scheduleForm(forms.ModelForm):
         model = Schedule
         fields = ['train_date']
         
+
+# class AddScheduleForm(forms.ModelForm):	
+#     class Meta:
+#         model = Schedule
+#         fields = ['train', 'train_date', ]
+
+#     labels = {
+#             'train_date': 'Time' 
+#     }
+        
+class AddScheduleForm(forms.ModelForm):	
+    class Meta:
+        model = Schedule
+        fields = [ 'train_date' ]

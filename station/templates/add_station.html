@@ -1,59 +1,35 @@
+
+
+
 {% extends 'base.html' %}
 {% load crispy_forms_tags  %}
 {% block title %}Add Station{% endblock %} 
 {% block content %}
 
-<div class="mb-20 w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 m-auto mt-7">
+
+
+
+<div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 m-auto mt-7">
     <form class="space-y-6" action="#" method="POST">
-        <h5 class="text-xl font-medium text-gray-900 dark:text-white text-center">Add Train</h5>
+        <h5 class="text-xl font-medium text-gray-900 dark:text-white text-center">Deposit</h5>
         {% csrf_token %}
         {% for hidden_field in form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %} 
+        {% for field in form.visible_fields %}
 
         <div>
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="{{ form.train_name.id_for_label }}">
-                {{ form.train_name.label }}
-            </label>
-            <input name="{{ form.train_name.name }}" id="{{ form.train_name.id_for_label }}" type="{{ form.train_name.widget_type }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"  for="{{ field.id_for_label }}" > {{ field.label }} </label>
+            <input name="{{ field.name }}" id="{{ field.id_for_label }}" type="{{ field.widget_type }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"  required>
         </div>
 
-        <div>
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="{{ form.start_station.id_for_label }}">
-                {{ form.start_station.label }}
-            </label>
-            {{ form.start_station }}
-        </div>
-
-        <div>
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="{{ form.end_station.id_for_label }}">
-                {{ form.end_station.label }}
-            </label>
-            {{ form.end_station }}
-        </div>
-        
-        <div>
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="{{ form.price.id_for_label }}">
-                Ticket {{ form.price.label }}
-            </label>
-            <input name="{{ form.price.name }}" id="{{ form.price.id_for_label }}" type="{{ form.price.widget_type }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-        </div>
-
-        <div>
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="{{ form.total_number_of_seats.id_for_label }}">
-                {{ form.total_number_of_seats.label }}
-            </label>
-            <input name="{{ form.total_number_of_seats.name }}" id="{{ form.total_number_of_seats.id_for_label }}" type="{{ form.total_number_of_seats.widget_type }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-        </div>
-
-        <div>
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="{{ form.train_date.id_for_label }}">
-                {{ form.train_date.label }}
-            </label>
-            <input name="{{ form.train_date.name }}" id="{{ form.train_date.id_for_label }}" type="{{ form.train_date.widget_type }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-        </div>
+        {% if field.errors %} {% for error in field.errors %}
+                <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
+        {% endfor %} 
+        {% endif %} {% endfor %}
 
         <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
 </div>
+
 
 
 {% endblock %}

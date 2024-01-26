@@ -63,7 +63,12 @@
             <strong>To:</strong> {{train.end_station}}
           </p>
           <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            <strong>Shedule:</strong>
+            {% if request.user.is_superuser %}
+              <a href="{% url 'add_schedule' train.id %}"  class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><strong>Shedule:</strong></a>
+            {% else %}
+              <strong>Shedule:</strong>
+            {% endif %}
+
             {% for s in schedule %}
               {% if s.train.id == train.id %}
               {% if request.user.is_superuser %}

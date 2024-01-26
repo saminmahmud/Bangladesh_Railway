@@ -12,5 +12,6 @@ urlpatterns = [
     path('category/<slug:category_slug>/', views.home, name='category_wise_post'),
     path('account/', include("passenger.urls")),
     path('train/', include("train.urls")),
+    path('station/', include("station.urls")),
 
 ]

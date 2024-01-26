@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,  get_object_or_404
 from django.urls import reverse_lazy
 from .models import Train, Seat,Review, Schedule
 from django.views.generic import DetailView,FormView, UpdateView , DeleteView, TemplateView
-from .forms import ReviewForm, AddTrainForm, Edit_scheduleForm
+from .forms import ReviewForm, AddTrainForm, Edit_scheduleForm, AddScheduleForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -119,43 +119,23 @@ class EditScheduleView(UpdateView):
     pk_url_kwarg = 'id'
     success_url = reverse_lazy('home')
 
-class eEditScheduleView (TemplateView):
-    model = Schedule
-    form_class = Edit_scheduleForm
-    template_name = 'edit_schedule.html'
 
-# @login_required
-# def _schedule(request, tid):
-#     if request.method == 'POST':
-#         form = Edit_scheduleForm(request.POST)
-#         if form.is_valid():
-#             train = Train.objects.get(pk=tid)
-#             print(train) 
-#             train_date = form.cleaned_data.get('train_date')
-#             print(train_date) 
-#             schedule = Schedule.objects.filter(train=train)
-#             print(schedule.train_date)
-#             # sender.save(update_fields=['balance'])
-#         return redirect('home')
-#     else:
-#         form = Edit_scheduleForm()
-
-#     return render(request, 'edit_schedule.html', {'form': form})
-
-
-@login_required
-def EditSchedule(request, id):
-    schedule = get_object_or_404(Schedule, pk=id)
-
+def add_schedule(request, id):
     if request.method == 'POST':
-        form = Edit_scheduleForm(request.POST, instance=schedule)
+        form = AddScheduleForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            train = Train.objects.get(pk=id)
+            train_date = form.cleaned_data.get('train_date')
+
+            schedule = Schedule.objects.create(
+                train = train,
+                train_date = train_date,
+            )
+            messages.success(request, 'Schedule Added successfully😀')
+            # form.save()
+            return redirect('home') 
     else:
-        form = Edit_scheduleForm(instance=schedule)
-
-    return render(request, 'edit_schedule.html', {'form': form, 'schedule': schedule})
-
+        form = AddScheduleForm()
+    return render(request, 'add_schedule.html', {'form': form})
 
     

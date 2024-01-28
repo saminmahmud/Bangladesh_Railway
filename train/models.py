@@ -5,6 +5,7 @@ from station.models import Station
 
 
 class Train(models.Model):
+    image = models.ImageField(upload_to='train/media/', null=True, blank=True)
     name = models.CharField(max_length=100)
     start_station = models.ForeignKey(Station, related_name="start_station" , null=True, blank=True, on_delete=models.CASCADE)
     end_station =  models.ForeignKey(Station, related_name="end_station" , null=True, blank=True, on_delete=models.CASCADE)
@@ -38,6 +39,7 @@ class Review(models.Model):
 
 
 class AddTrain(models.Model):
+    image = models.ImageField(upload_to='train/media/', null=True, blank=True)
     train_name = models.CharField(max_length=30)
     start_station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='start_trains')
     end_station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='end_trains')

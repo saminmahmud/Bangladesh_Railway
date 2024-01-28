@@ -71,8 +71,9 @@ def buy(request, tid, sid):
 @login_required
 def addTrain(request):
     if request.method == 'POST':
-        form = AddTrainForm(request.POST)
+        form = AddTrainForm(request.POST, request.FILES)
         if form.is_valid():
+            image = form.cleaned_data.get('image')
             train_name = form.cleaned_data.get('train_name')
             start_station = form.cleaned_data.get('start_station')
             end_station = form.cleaned_data.get('end_station')
@@ -83,6 +84,7 @@ def addTrain(request):
             print(f"{train_name} - {start_station} -{end_station} -{price} -{total_number_of_seats} -{train_date} --------")
 
             train = Train.objects.create(
+                image = image,
                 name = train_name,
                 start_station = start_station,
                 end_station = end_station,

@@ -13,7 +13,7 @@ from django import forms
 class AddTrainForm(forms.ModelForm):
     class Meta:
         model = AddTrain
-        fields = ['train_name', 'start_station', 'end_station', 'price', 'total_number_of_seats', 'train_date']
+        fields = ['image','train_name', 'start_station', 'end_station', 'price', 'total_number_of_seats', 'train_date']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

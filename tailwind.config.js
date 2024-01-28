@@ -14,7 +14,10 @@ import withMT from "@material-tailwind/html/utils/withMT";
 // tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = withMT({
-  content: ["**/*.html"],
+  content: ["**/*.html",
+  './node_modules/flowbite/**/*.js'
+],
+
   // darkMode: 'class',
   theme: {
     extend: {
@@ -54,5 +57,5 @@ module.exports = withMT({
       ],
     },
   },
-  plugins: [],
+  plugins: [require('flowbite/plugin')],
 });

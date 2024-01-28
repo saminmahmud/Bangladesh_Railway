@@ -57,3 +57,4 @@ types-python-dateutil
 tzdata
 urllib3
 virtualenv
+whitenoise

@@ -11,5 +11,5 @@ def Add_station(request):
             return redirect('home')  
     else:
         form = StationForm()
+    
     return render(request, 'add_station.html', {'form': form})
-

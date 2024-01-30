@@ -109,7 +109,6 @@ def addTrain(request):
             return redirect('home')
     else:
         form = AddTrainForm()
-
     return render(request, 'add_train.html', {'form': form})
 
 

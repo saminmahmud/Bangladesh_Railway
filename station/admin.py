@@ -6,4 +6,3 @@ class StationAdmin (admin.ModelAdmin):
     list_display = ['name','slug']
 
 admin.site.register(Station, StationAdmin)
-
